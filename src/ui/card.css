@@ -1,0 +1,173 @@
+.card-content {
+  --ink-color: color-mix(in oklab, #ffffff, #142030 calc(var(--ink, 0) * 100%));
+
+  box-sizing: border-box;
+  width: 440px;
+  height: 594px;
+  padding: 40px 38px 32px;
+  display: flex;
+  flex-direction: column;
+  color: var(--ink-color);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-feature-settings: 'cv11', 'ss01';
+  font-variant-numeric: tabular-nums;
+  /* A soft halo that flips from dark to light with the ink, so text holds on any glass. */
+  text-shadow: 0 1px 16px rgb(0 0 0 / calc(0.28 * (1 - var(--ink, 0)))),
+    0 0 12px rgb(255 255 255 / calc(0.35 * var(--ink, 0)));
+  user-select: none;
+  pointer-events: none;
+}
+
+.card-content.is-loading {
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+}
+
+.card-place {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.card-place svg {
+  opacity: 0.85;
+  flex: none;
+}
+
+.card-time {
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.card-hero {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.card-temp {
+  display: flex;
+  align-items: flex-start;
+  font-size: 156px;
+  font-weight: 200;
+  line-height: 0.92;
+  letter-spacing: -0.06em;
+  margin-left: -6px;
+}
+
+.card-degree {
+  font-size: 0.42em;
+  font-weight: 300;
+  line-height: 1;
+  margin-top: 0.12em;
+  margin-left: 0.04em;
+  letter-spacing: 0;
+}
+
+.card-condition {
+  margin-top: 12px;
+  font-size: 26px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.card-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 0;
+  padding-top: 20px;
+  border-top: 1px solid color-mix(in oklab, var(--ink-color) 24%, transparent);
+}
+
+.card-stats dt {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.62;
+}
+
+.card-stats dd {
+  margin: 6px 0 0;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.card-stats small {
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+.card-source {
+  margin-top: 18px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  opacity: 0.5;
+}
+
+/* Static fallback (no WebGL2). */
+.static-stage {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(40% 50% at 30% 30%, #2a6f97 0%, transparent 70%),
+    radial-gradient(45% 55% at 70% 65%, #34509a 0%, transparent 70%),
+    radial-gradient(35% 45% at 60% 20%, #1d4e89 0%, transparent 70%),
+    #06111f;
+}
+
+.static-card {
+  border-radius: 48px;
+  background: rgb(255 255 255 / 0.08);
+  border: 1px solid rgb(255 255 255 / 0.22);
+  box-shadow: 0 30px 80px rgb(0 0 0 / 0.35), inset 0 1px 0 rgb(255 255 255 / 0.25);
+  backdrop-filter: blur(28px) saturate(1.2);
+  -webkit-backdrop-filter: blur(28px) saturate(1.2);
+}
+
+/* Projected text layer over the WebGL card; perspective is set from the camera each frame. */
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.card-overlay-card {
+  width: 440px;
+  height: 594px;
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
+}
+
+/* Text that changes with the weather fades in instead of swapping. */
+.card-fade {
+  animation: card-fade-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes card-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-fade {
+    animation: none;
+  }
+}
